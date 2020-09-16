@@ -1,8 +1,9 @@
 using System;
+using Subscriptions.SharedKernel;
 
 namespace Subscriptions.Domain
 {
-    public class Product
+    public class Product: Entity
     {
         private Product()
         {
@@ -14,7 +15,6 @@ namespace Subscriptions.Domain
             Name = name;
             PricePlan = pricePlan;
         }
-        public Guid Id { get; private set; }
         public string Name { get; private set;}
         public PricePlan PricePlan { get; private set;}
     }
