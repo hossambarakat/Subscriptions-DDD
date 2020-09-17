@@ -10,7 +10,7 @@ namespace Subscriptions.Controllers
     {
         public Guid CustomerId { get; set; }
         public Guid ProductId { get; set; }
-        public string? DiscountCode { get; set; }
+        public string DiscountCode { get; set; }
     }
     public class SubscribeRequestHandler : IRequestHandler<SubscribeRequest>
     {

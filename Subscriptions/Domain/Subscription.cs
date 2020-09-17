@@ -19,7 +19,6 @@ namespace Subscriptions.Domain
             Status = SubscriptionStatus.Active;
             CurrentPeriodEndDate = product.PricePlan.BillingPeriod.CalculateBillingPeriodEndDate(DateTimeOffset.UtcNow);
         }
-        public Guid Id { get; }
         public SubscriptionStatus Status { get; private set; }
         public Customer Customer { get; private set; }
         public Product Product { get; private set; }
