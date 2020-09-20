@@ -25,7 +25,7 @@ namespace Subscriptions.Domain
         private readonly List<Subscription> _subscriptions = new List<Subscription>();
         public IReadOnlyCollection<Subscription> Subscriptions => _subscriptions.AsReadOnly();
 
-        public Subscription SubscribeTo(Product product, string discountCode)
+        public void SubscribeTo(Product product, string discountCode)
         {
             var subscriptionAmount = product.PricePlan.Amount;
             if (discountCode == "Cool-20")
@@ -40,13 +40,11 @@ namespace Subscriptions.Domain
             var subscription = new Subscription(this, product, subscriptionAmount);
             _subscriptions.Add(subscription);
             
-            AddDomainEvent(new CustomerSubscribedToProduct()
+            AddDomainEvent(new CustomerSubscribedToProduct
             {
                 CustomerId = Id,
                 ProductId = product.Id
             });
-
-            return subscription;
         }
     }
 }

@@ -13,19 +13,19 @@ namespace Subscriptions.Domain
             
         }
 
-        public abstract DateTimeOffset CalculateBillingPeriodEndDate(DateTimeOffset start);
+        public abstract DateTime CalculateBillingPeriodEndDate(DateTime start);
 
         private sealed class WeeklyBillingPeriod : BillingPeriod
         {
             public WeeklyBillingPeriod() : base("Weekly", 1) {}
 
-            public override DateTimeOffset CalculateBillingPeriodEndDate(DateTimeOffset start) => start.AddDays(7);
+            public override DateTime CalculateBillingPeriodEndDate(DateTime start) => start.AddDays(7);
         }
         private sealed class MonthlyBillingPeriod : BillingPeriod
         {
             public MonthlyBillingPeriod() : base("Monthly", 2) {}
 
-            public override DateTimeOffset CalculateBillingPeriodEndDate(DateTimeOffset start) => start.AddMonths(1);
+            public override DateTime CalculateBillingPeriodEndDate(DateTime start) => start.AddMonths(1);
         }
     }
 }

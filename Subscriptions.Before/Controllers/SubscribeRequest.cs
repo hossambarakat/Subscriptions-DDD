@@ -1,7 +1,9 @@
 using System;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Subscriptions.Before.Data;
 using Subscriptions.Before.Domain;
 using Subscriptions.Before.Services;
@@ -12,29 +14,27 @@ namespace Subscriptions.Before.Controllers
     {
         public Guid CustomerId { get; set; }
         public Guid ProductId { get; set; }
-        public string? DiscountCode { get; set; }
+        public string DiscountCode { get; set; }
     }
     public class SubscribeRequestHandler : IRequestHandler<SubscribeRequest>
     {
-        private readonly IRepository<Customer> _customerRepository;
-        private readonly IRepository<Product> _productRepository;
-        private readonly IRepository<Subscription> _subscriptionRepository;
+        private readonly SubscriptionContext _subscriptionContext;
         private readonly IEmailSender _emailSender;
 
-        public SubscribeRequestHandler(IRepository<Customer> customerRepository, 
-            IRepository<Product> productRepository,
-            IRepository<Subscription> subscriptionRepository,
+        public SubscribeRequestHandler(SubscriptionContext subscriptionContext,
             IEmailSender emailSender)
         {
-            _customerRepository = customerRepository;
-            _productRepository = productRepository;
-            _subscriptionRepository = subscriptionRepository;
+            _subscriptionContext = subscriptionContext;
             _emailSender = emailSender;
         }
         public async Task<Unit> Handle(SubscribeRequest request, CancellationToken cancellationToken)
         {
-            var customer = await _customerRepository.FindByIdAsync(request.CustomerId);
-            var product = await _productRepository.FindByIdAsync(request.ProductId);
+            var customer = await _subscriptionContext
+                .Customers
+                .Include(x=>x.Subscriptions)
+                .FirstAsync(x=> x.Id == request.CustomerId, cancellationToken: cancellationToken);
+            
+            var product = await _subscriptionContext.Products.FindAsync(request.ProductId);
             
             var subscriptionAmount = product.Amount;
             if (request.DiscountCode == "Cool-20")
@@ -48,8 +48,8 @@ namespace Subscriptions.Before.Controllers
 
             var currentPeriodEndDate = product.BillingPeriod switch
             {
-                BillingPeriod.Weekly => DateTimeOffset.UtcNow.AddDays(7),
-                BillingPeriod.Monthly => DateTimeOffset.UtcNow.AddMonths(1)
+                BillingPeriod.Weekly => DateTime.UtcNow.AddDays(7),
+                BillingPeriod.Monthly => DateTime.UtcNow.AddMonths(1)
             };
 
             var subscription = new Subscription
@@ -61,12 +61,9 @@ namespace Subscriptions.Before.Controllers
                 Status = SubscriptionStatus.Active,
                 CurrentPeriodEndDate = currentPeriodEndDate    
             };
-            
-            await _subscriptionRepository.Insert(subscription);
-            
             customer.Subscriptions.Add(subscription);
 
-            await _customerRepository.SaveChangesAsync();
+            await _subscriptionContext.SaveChangesAsync(cancellationToken);
             
             await _emailSender.SendEmailAsync("Congratulations! You subscribed to a cool product");
             return Unit.Value;

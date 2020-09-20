@@ -6,6 +6,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subscriptions.Tests", "Subs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subscriptions.Before", "Subscriptions.Before\Subscriptions.Before.csproj", "{7E610CEC-1504-4F5A-84DD-6A2E26A8CD82}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "After", "After", "{29242C2E-93C6-4CFD-97A6-717F7AF8D257}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Before", "Before", "{67564448-990E-45C9-8B67-7075FBDEFC62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subscriptions.Before.Tests", "Subscriptions.Before.Tests\Subscriptions.Before.Tests.csproj", "{269D60D3-647B-403A-BC4C-67C1BD825760}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +30,15 @@ Global
 		{7E610CEC-1504-4F5A-84DD-6A2E26A8CD82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E610CEC-1504-4F5A-84DD-6A2E26A8CD82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E610CEC-1504-4F5A-84DD-6A2E26A8CD82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{269D60D3-647B-403A-BC4C-67C1BD825760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{269D60D3-647B-403A-BC4C-67C1BD825760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{269D60D3-647B-403A-BC4C-67C1BD825760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{269D60D3-647B-403A-BC4C-67C1BD825760}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A5C34A3F-6C5E-49B5-B2AC-956D19814058} = {29242C2E-93C6-4CFD-97A6-717F7AF8D257}
+		{3AFDBD4F-28EF-47EC-AF6E-185D7F3B7D65} = {29242C2E-93C6-4CFD-97A6-717F7AF8D257}
+		{7E610CEC-1504-4F5A-84DD-6A2E26A8CD82} = {67564448-990E-45C9-8B67-7075FBDEFC62}
+		{269D60D3-647B-403A-BC4C-67C1BD825760} = {67564448-990E-45C9-8B67-7075FBDEFC62}
 	EndGlobalSection
 EndGlobal

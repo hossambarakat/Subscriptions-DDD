@@ -17,13 +17,13 @@ namespace Subscriptions.Domain
             Product = product;
             Amount = amount;
             Status = SubscriptionStatus.Active;
-            CurrentPeriodEndDate = product.PricePlan.BillingPeriod.CalculateBillingPeriodEndDate(DateTimeOffset.UtcNow);
+            CurrentPeriodEndDate = product.PricePlan.BillingPeriod.CalculateBillingPeriodEndDate(DateTime.UtcNow);
         }
         public SubscriptionStatus Status { get; private set; }
         public Customer Customer { get; private set; }
         public Product Product { get; private set; }
         public decimal Amount { get; private set; }
-        public DateTimeOffset CurrentPeriodEndDate { get; private set; } 
+        public DateTime CurrentPeriodEndDate { get; private set; } 
 
         public void CancelSubscription()
         {

@@ -11,7 +11,9 @@ namespace Subscriptions.Before.Data.Config
         {
             builder.ToTable("Product");
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).HasColumnName("ProductID");
+            builder.Property(x => x.Id)
+                .HasColumnName("ProductID")
+                .ValueGeneratedNever();
             builder.Property(x => x.Name);
             builder.Property(p => p.Amount)
                 .HasColumnName("Amount")

@@ -13,10 +13,10 @@ using Xunit;
 
 namespace Subscriptions.Tests
 {
-    public class UnitTest1
+    public class CustomerSubscribeToProductShould
     {
         [Fact]
-        public async Task Subscribe_ShouldCreateSubscription()
+        public async Task AddSubscriptionToTheDatabase()
         {
             var options = new DbContextOptionsBuilder<SubscriptionContext>()
                 .UseSqlServer("Server=localhost;Database=Subscriptions;uid=sa;pwd=yourStrong(!)Password;")
@@ -40,7 +40,7 @@ namespace Subscriptions.Tests
         }
         
         [Fact]
-        public async Task Subscribe_ShouldRaiseCustomerSubscribedToProductEvent()
+        public async Task RaiseCustomerSubscribedToProductEvent()
         {
             var options = new DbContextOptionsBuilder<SubscriptionContext>()
                 .UseSqlServer("Server=localhost;Database=Subscriptions;uid=sa;pwd=yourStrong(!)Password;")

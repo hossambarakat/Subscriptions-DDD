@@ -4,9 +4,9 @@ namespace Subscriptions.Before.Domain
 {
     public class Product: Entity
     {
-        public string Name { get; private set;}
-        public decimal Amount { get; }
-        public BillingPeriod BillingPeriod { get; }
+        public string Name { get; set;}
+        public decimal Amount { get; set; }
+        public BillingPeriod BillingPeriod { get; set; }
     }
 
     public enum BillingPeriod

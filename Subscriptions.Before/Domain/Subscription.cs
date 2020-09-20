@@ -9,6 +9,6 @@ namespace Subscriptions.Before.Domain
         public Customer Customer { get; set; }
         public Product Product { get; set; }
         public decimal Amount { get; set; }
-        public DateTimeOffset CurrentPeriodEndDate { get; set; }
+        public DateTime CurrentPeriodEndDate { get; set; }
     }
 }

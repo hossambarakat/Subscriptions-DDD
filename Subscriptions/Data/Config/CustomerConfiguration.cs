@@ -10,7 +10,9 @@ namespace Subscriptions.Data.Config
         {
             builder.ToTable("Customer");
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).HasColumnName("CustomerID");
+            builder.Property(x => x.Id)
+                .HasColumnName("CustomerID")
+                .ValueGeneratedNever();
             builder.OwnsOne(x => x.FullName, nameBuilder =>
             {
                 nameBuilder.Property(p => p.FirstName).HasColumnName("FirstName");
@@ -20,8 +22,6 @@ namespace Subscriptions.Data.Config
             {
                 nameBuilder.Property(p => p.Value).HasColumnName("Email");
             });
-            builder.HasMany(x => x.Subscriptions)
-                .WithOne(x => x.Customer);
         }
     }
 }

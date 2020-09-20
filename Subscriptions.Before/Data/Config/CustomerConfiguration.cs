@@ -10,12 +10,12 @@ namespace Subscriptions.Before.Data.Config
         {
             builder.ToTable("Customer");
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).HasColumnName("CustomerID");
+            builder.Property(x => x.Id)
+                .HasColumnName("CustomerID")
+                .ValueGeneratedNever();
             builder.Property(p => p.FirstName).HasColumnName("FirstName");
             builder.Property(p => p.LastName).HasColumnName("LastName");
             builder.Property(p => p.Email).HasColumnName("Email");
-            builder.HasMany(x => x.Subscriptions)
-                .WithOne(x => x.Customer);
         }
     }
 }
