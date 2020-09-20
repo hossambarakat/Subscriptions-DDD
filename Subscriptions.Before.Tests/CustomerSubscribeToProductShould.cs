@@ -21,6 +21,8 @@ namespace Subscriptions.Before.Tests
                 .UseSqlServer("Server=localhost;Database=Subscriptions;uid=sa;pwd=yourStrong(!)Password;")
                 .Options;
             var context = new SubscriptionContext(options);
+            await context.Database.MigrateAsync();
+
             var customer = new Customer
             {
                 Id = Guid.NewGuid(),

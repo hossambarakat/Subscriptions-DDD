@@ -49,7 +49,8 @@ namespace Subscriptions.Before.Controllers
             var currentPeriodEndDate = product.BillingPeriod switch
             {
                 BillingPeriod.Weekly => DateTime.UtcNow.AddDays(7),
-                BillingPeriod.Monthly => DateTime.UtcNow.AddMonths(1)
+                BillingPeriod.Monthly => DateTime.UtcNow.AddMonths(1),
+                _ => throw new InvalidOperationException()
             };
 
             var subscription = new Subscription
