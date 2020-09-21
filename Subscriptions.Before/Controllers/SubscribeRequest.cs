@@ -14,7 +14,6 @@ namespace Subscriptions.Before.Controllers
     {
         public Guid CustomerId { get; set; }
         public Guid ProductId { get; set; }
-        public string DiscountCode { get; set; }
     }
     public class SubscribeRequestHandler : IRequestHandler<SubscribeRequest>
     {
