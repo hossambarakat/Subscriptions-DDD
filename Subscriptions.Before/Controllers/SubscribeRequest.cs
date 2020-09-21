@@ -35,13 +35,13 @@ namespace Subscriptions.Before.Controllers
                 .FirstAsync(x=> x.Id == request.CustomerId, cancellationToken: cancellationToken);
             
             var product = await _subscriptionContext.Products.FindAsync(request.ProductId);
-            
+
             var subscriptionAmount = product.Amount;
-            if (request.DiscountCode == "Cool-20")
+            if (customer.MoneySpent >= 100)
             {
                 subscriptionAmount *= 0.8M;
             }
-            else if (request.DiscountCode == "Awesome-50")
+            else if (customer.MoneySpent >= 1000)
             {
                 subscriptionAmount *= 0.5M;
             }
@@ -63,6 +63,7 @@ namespace Subscriptions.Before.Controllers
                 CurrentPeriodEndDate = currentPeriodEndDate    
             };
             customer.Subscriptions.Add(subscription);
+            customer.MoneySpent += subscription.Amount;
 
             await _subscriptionContext.SaveChangesAsync(cancellationToken);
             

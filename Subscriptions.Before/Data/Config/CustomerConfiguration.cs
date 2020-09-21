@@ -16,6 +16,8 @@ namespace Subscriptions.Before.Data.Config
             builder.Property(p => p.FirstName).HasColumnName("FirstName");
             builder.Property(p => p.LastName).HasColumnName("LastName");
             builder.Property(p => p.Email).HasColumnName("Email");
+            builder.Property(p => p.MoneySpent)
+                .HasColumnType("money");
         }
     }
 }

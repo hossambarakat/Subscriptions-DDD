@@ -8,6 +8,7 @@ namespace Subscriptions.Before.Domain
         public string Email { get; set;}
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public decimal MoneySpent { get; set; }
         public List<Subscription> Subscriptions { get; set; } = new List<Subscription>();
     }
 }
