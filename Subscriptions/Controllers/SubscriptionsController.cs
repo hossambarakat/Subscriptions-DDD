@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Subscriptions.Commands;
 
 namespace Subscriptions.Controllers
 {
@@ -23,9 +24,5 @@ namespace Subscriptions.Controllers
             return Ok();
         }
 
-        public IActionResult Cancel(CancelSubscriptionRequest request)
-        {
-            return Ok();
-        }
     }
 }

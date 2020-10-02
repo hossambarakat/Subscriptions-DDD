@@ -4,9 +4,9 @@ using Subscriptions.SharedKernel;
 
 namespace Subscriptions.Domain
 {
-    public class FullName : ValueObject
+    public class CustomerName : ValueObject
     {
-        public FullName(string firstName, string lastName)
+        public CustomerName(string firstName, string lastName)
         {
             FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
             LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));

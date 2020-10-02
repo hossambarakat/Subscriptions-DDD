@@ -3,29 +3,20 @@ using Ardalis.SmartEnum;
 
 namespace Subscriptions.Domain
 {
-    public abstract class BillingPeriod : SmartEnum<BillingPeriod>
+    public class BillingPeriod : SmartEnum<BillingPeriod>
     {
-        public static readonly BillingPeriod Weekly = new WeeklyBillingPeriod();
-        public static readonly BillingPeriod Monthly = new MonthlyBillingPeriod();
+        private readonly Func<DateTime> _endDateCalculation;
+        public static readonly BillingPeriod Weekly = new BillingPeriod("Weekly", 1, () => DateTime.UtcNow.AddDays(7));
+        public static readonly BillingPeriod Monthly = new BillingPeriod("Monthly", 2, () => DateTime.UtcNow.AddMonths(1));
 
-        private BillingPeriod(string name, int value) : base(name, value)
+        private BillingPeriod(string name, int value, Func<DateTime> endDateCalculation) : base(name, value)
         {
-            
+            _endDateCalculation = endDateCalculation;
         }
 
-        public abstract DateTime CalculateBillingPeriodEndDate(DateTime start);
-
-        private sealed class WeeklyBillingPeriod : BillingPeriod
+        public DateTime CalculateBillingPeriodEndDate()
         {
-            public WeeklyBillingPeriod() : base("Weekly", 1) {}
-
-            public override DateTime CalculateBillingPeriodEndDate(DateTime start) => start.AddDays(7);
-        }
-        private sealed class MonthlyBillingPeriod : BillingPeriod
-        {
-            public MonthlyBillingPeriod() : base("Monthly", 2) {}
-
-            public override DateTime CalculateBillingPeriodEndDate(DateTime start) => start.AddMonths(1);
+            return _endDateCalculation();
         }
     }
 }

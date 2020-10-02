@@ -1,6 +1,7 @@
 using System.Linq;
 using Shouldly;
 using Subscriptions.Domain;
+using Subscriptions.Domain.Services;
 using Subscriptions.Events;
 using Xunit;
 
@@ -11,8 +12,8 @@ namespace Subscriptions.Tests
         [Fact]
         public void SubscribeToProduct_ShouldAddSubscription()
         {
-            var product = new Product("Flowers", new PricePlan(10, BillingPeriod.Monthly));
-            var customer = new Customer(new Email("customer@example.org"),new  FullName("Hossam", "Barakat"));
+            var product = new Product("Flowers", 10, BillingPeriod.Monthly);
+            var customer = new Customer(new Email("customer@example.org"),new  CustomerName("Hossam", "Barakat"));
             customer.SubscribeTo(product, null);
             
             customer.Subscriptions.Count.ShouldBe(1);
@@ -24,9 +25,9 @@ namespace Subscriptions.Tests
         [Fact]
         public void SubscribeToProduct_ShouldRaiseDomainEvent()
         {
-            var product = new Product("Flowers", new PricePlan(10, BillingPeriod.Monthly));
-            var customer = new Customer(new Email("customer@example.org"),new  FullName("Hossam", "Barakat"));
-            customer.SubscribeTo(product, "Awesome-50");
+            var product = new Product("Flowers", 10, BillingPeriod.Monthly);
+            var customer = new Customer(new Email("customer@example.org"),new  CustomerName("Hossam", "Barakat"));
+            customer.SubscribeTo(product, new SubscriptionAmountCalculator());
             
             customer.Subscriptions.Count.ShouldBe(1);
 

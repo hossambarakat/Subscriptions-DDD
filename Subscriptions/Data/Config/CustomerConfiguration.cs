@@ -13,15 +13,19 @@ namespace Subscriptions.Data.Config
             builder.Property(x => x.Id)
                 .HasColumnName("CustomerID")
                 .ValueGeneratedNever();
-            builder.OwnsOne(x => x.FullName, nameBuilder =>
+            builder.OwnsOne(x => x.CustomerName, nameBuilder =>
             {
-                nameBuilder.Property(p => p.FirstName).HasColumnName("FirstName");
-                nameBuilder.Property(p => p.LastName).HasColumnName("LastName");
+                nameBuilder.Property(p => p.FirstName).HasColumnName("FirstName").IsRequired();
+                nameBuilder.Property(p => p.LastName).HasColumnName("LastName").IsRequired();
             });
-            builder.OwnsOne(x => x.Email, nameBuilder =>
-            {
-                nameBuilder.Property(p => p.Value).HasColumnName("Email");
-            });
+            builder.Navigation(e => e.CustomerName).IsRequired();
+            
+            builder.Property(x => x.Email)
+                .HasColumnName("Email")
+                .HasConversion(email=> email.Value, value => new Email(value))
+                .IsRequired();
+            builder.Property(p => p.MoneySpent)
+                .HasColumnType("money");
         }
     }
 }

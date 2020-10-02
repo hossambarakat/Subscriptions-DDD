@@ -74,9 +74,12 @@ GO
 SELECT TOP (1000) [SubscriptionID]
       ,[customer].*
       ,product.*
+      ,[Subscriptions].[dbo].[Subscription].*
       ,[Status]
   FROM [Subscriptions].[dbo].[Subscription]
   inner join product on product.productid = [Subscription].productid 
   inner join Customer on Customer.CustomerID = Subscription.CustomerID
 
   
+
+select * from Customer

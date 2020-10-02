@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Subscriptions.Data;
+using Subscriptions.Domain.Services;
+using Subscriptions.Infrastructure;
 using Subscriptions.Services;
 
 namespace Subscriptions
@@ -31,8 +26,14 @@ namespace Subscriptions
         {
             services.AddControllers();
             services.AddMediatR(typeof(Startup));
-            services.AddDbContext<SubscriptionContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SubscriptionDatabase")));
+            services.AddScoped<DomainEventDispatcher>();
+            services.AddScoped<ISubscriptionAmountCalculator, SubscriptionAmountCalculator>();
+            services.AddDbContext<SubscriptionContext>((context,options) =>
+            {
+                options
+                    .AddInterceptors(context.GetService<DomainEventDispatcher>())
+                    .UseSqlServer(Configuration.GetConnectionString("SubscriptionDatabase"));
+            });
             services.AddScoped<IEmailSender, EmailSender>();
         }
 

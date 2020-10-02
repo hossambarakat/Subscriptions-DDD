@@ -14,17 +14,15 @@ namespace Subscriptions.Data.Config
                 .HasColumnName("ProductID")
                 .ValueGeneratedNever();
             builder.Property(x => x.Name);
-            builder.OwnsOne(x => x.PricePlan, pricePlanBuilder =>
-            {
-                pricePlanBuilder.Property(p => p.Amount)
-                    .HasColumnName("Amount")
-                    .HasColumnType("money");
-                pricePlanBuilder.Property(p => p.BillingPeriod)
-                    .HasColumnName("BillingPeriod")
-                    .HasConversion(period => period.Name,
-                        name => BillingPeriod.FromName(name, true));
-            });
-
+            builder.Property(p => p.Amount)
+                .HasColumnName("Amount")
+                .HasColumnType("money");
+            builder.Property(x => x.BillingPeriod)
+                .HasColumnName("BillingPeriod")
+                .HasConversion(period => period.Name,
+                    name => BillingPeriod.FromName(name, true));
+            builder.HasMany(x => x.Tags)
+                .WithMany(x => x.Products);
         }
     }
 }

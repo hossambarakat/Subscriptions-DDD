@@ -10,29 +10,19 @@ namespace Subscriptions.Domain
         {
             
         }
-        public Subscription(Customer customer, Product product, decimal amount)
+        public Subscription(Customer customer, Product product, decimal amount): this()
         {
             Id = Guid.NewGuid();
             Customer = customer;
             Product = product;
             Amount = amount;
             Status = SubscriptionStatus.Active;
-            CurrentPeriodEndDate = product.PricePlan.BillingPeriod.CalculateBillingPeriodEndDate(DateTime.UtcNow);
+            CurrentPeriodEndDate = product.BillingPeriod.CalculateBillingPeriodEndDate();
         }
         public SubscriptionStatus Status { get; private set; }
         public Customer Customer { get; private set; }
         public Product Product { get; private set; }
         public decimal Amount { get; private set; }
-        public DateTime CurrentPeriodEndDate { get; private set; } 
-
-        public void CancelSubscription()
-        {
-            Status = SubscriptionStatus.Cancelled;
-            
-            AddDomainEvent(new SubscriptionCancelled
-            {
-                SubscriptionId = Id
-            });
-        }
+        public DateTime CurrentPeriodEndDate { get; private set; }
     }
 }
