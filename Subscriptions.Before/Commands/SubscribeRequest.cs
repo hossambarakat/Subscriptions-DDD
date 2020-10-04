@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -8,7 +7,7 @@ using Subscriptions.Before.Data;
 using Subscriptions.Before.Domain;
 using Subscriptions.Before.Services;
 
-namespace Subscriptions.Before.Controllers
+namespace Subscriptions.Before.Commands
 {
     public class SubscribeRequest : IRequest
     {

@@ -13,10 +13,10 @@ using Xunit;
 
 namespace Subscriptions.Tests
 {
-    public class SubscribeRequestHandlerTests
+    public class SubscribeToProductTests
     {
         [Fact]
-        public async Task ShouldAddSubscriptionToTheDatabase()
+        public async Task Should_Add_Subscription_To_Database()
         {
             var options = new DbContextOptionsBuilder<SubscriptionContext>()
                 .AddInterceptors(new DomainEventDispatcher(Substitute.For<IMediator>()))

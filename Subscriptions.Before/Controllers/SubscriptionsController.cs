@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Subscriptions.Before.Commands;
 
 namespace Subscriptions.Before.Controllers
 {
@@ -20,11 +21,6 @@ namespace Subscriptions.Before.Controllers
         {
             await _mediator.Send(request); 
 
-            return Ok();
-        }
-
-        public IActionResult Cancel(CancelSubscriptionRequest request)
-        {
             return Ok();
         }
     }

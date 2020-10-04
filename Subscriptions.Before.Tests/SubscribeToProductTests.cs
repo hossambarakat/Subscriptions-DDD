@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using Shouldly;
-using Subscriptions.Before.Controllers;
+using Subscriptions.Before.Commands;
 using Subscriptions.Before.Data;
 using Subscriptions.Before.Domain;
 using Subscriptions.Before.Services;
@@ -12,10 +12,10 @@ using Xunit;
 
 namespace Subscriptions.Before.Tests
 {
-    public class CustomerSubscribeToProductShould
+    public class SubscribeToProductTests
     {
         [Fact]
-        public async Task AddSubscriptionToTheDatabase()
+        public async Task Should_Add_Subscription_To_Database()
         {
             var options = new DbContextOptionsBuilder<SubscriptionContext>()
                 .UseSqlServer("Server=localhost;Database=Subscriptions;uid=sa;pwd=yourStrong(!)Password;")
