@@ -17,7 +17,7 @@ namespace Subscriptions.Domain
         {
             Id = Guid.NewGuid();
             Email = email ?? throw new ArgumentNullException(nameof(email));
-            CustomerName = customerName;
+            CustomerName = customerName ?? throw new ArgumentNullException(nameof(customerName));
             _subscriptions = new List<Subscription>();
         }
 
