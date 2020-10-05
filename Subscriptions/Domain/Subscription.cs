@@ -13,9 +13,9 @@ namespace Subscriptions.Domain
         public Subscription(Customer customer, Product product, decimal amount): this()
         {
             Id = Guid.NewGuid();
-            Customer = customer;
-            Product = product;
-            Amount = amount;
+            Customer = customer ?? throw new ArgumentNullException(nameof(customer));
+            Product = product ?? throw new ArgumentNullException(nameof(product));
+            Amount = amount >= 0 ? amount : throw new ArgumentOutOfRangeException(nameof(amount));
             Status = SubscriptionStatus.Active;
             CurrentPeriodEndDate = product.BillingPeriod.CalculateBillingPeriodEndDate();
         }
