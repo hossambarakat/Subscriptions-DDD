@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Subscriptions.Before.Data;
+using Subscriptions.Before.Infrastructure;
 using Subscriptions.Before.Services;
 
 namespace Subscriptions.Before
@@ -31,8 +32,11 @@ namespace Subscriptions.Before
         {
             services.AddControllers();
             services.AddMediatR(typeof(Startup));
-            services.AddDbContext<SubscriptionContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SubscriptionDatabase")));
+            //services.AddScoped<DomainEventDispatcher>();
+            services.AddDbContext<SubscriptionContext>( (context,options) =>
+                options
+                    //.AddInterceptors(context.GetService<DomainEventDispatcher>())
+                    .UseSqlServer(Configuration.GetConnectionString("SubscriptionDatabase")));
             services.AddScoped<IEmailSender, EmailSender>();
         }
 

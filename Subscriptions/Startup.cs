@@ -26,9 +26,9 @@ namespace Subscriptions
         {
             services.AddControllers();
             services.AddMediatR(typeof(Startup));
-            services.AddScoped<DomainEventDispatcher>();
             services.AddScoped<ISubscriptionAmountCalculator, SubscriptionAmountCalculator>();
-            services.AddDbContext<SubscriptionContext>((context,options) =>
+            services.AddScoped<DomainEventDispatcher>();
+            services.AddDbContext<SubscriptionContext>((context, options) =>
             {
                 options
                     .AddInterceptors(context.GetService<DomainEventDispatcher>())
