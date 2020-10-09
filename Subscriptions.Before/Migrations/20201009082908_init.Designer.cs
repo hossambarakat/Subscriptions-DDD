@@ -10,8 +10,8 @@ using Subscriptions.Before.Data;
 namespace Subscriptions.Before.Migrations
 {
     [DbContext(typeof(SubscriptionContext))]
-    [Migration("20200920052030_Initial")]
-    partial class Initial
+    [Migration("20201009082908_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,16 +28,22 @@ namespace Subscriptions.Before.Migrations
                         .HasColumnName("CustomerID");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Email");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("FirstName");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("LastName");
+
+                    b.Property<decimal>("MoneySpent")
+                        .HasColumnType("money");
 
                     b.HasKey("Id");
 
@@ -60,6 +66,7 @@ namespace Subscriptions.Before.Migrations
                         .HasColumnName("BillingPeriod");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -79,10 +86,10 @@ namespace Subscriptions.Before.Migrations
                     b.Property<DateTime>("CurrentPeriodEndDate")
                         .HasColumnType("date");
 
-                    b.Property<Guid?>("CustomerId")
+                    b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ProductId")
+                    b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Status")
@@ -102,11 +109,15 @@ namespace Subscriptions.Before.Migrations
                 {
                     b.HasOne("Subscriptions.Before.Domain.Customer", "Customer")
                         .WithMany("Subscriptions")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Subscriptions.Before.Domain.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 

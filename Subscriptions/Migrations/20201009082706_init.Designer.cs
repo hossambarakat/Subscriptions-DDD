@@ -10,7 +10,7 @@ using Subscriptions.Data;
 namespace Subscriptions.Migrations
 {
     [DbContext(typeof(SubscriptionContext))]
-    [Migration("20201002065701_init")]
+    [Migration("20201009082706_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,10 +66,12 @@ namespace Subscriptions.Migrations
                         .HasColumnName("Amount");
 
                     b.Property<string>("BillingPeriod")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("BillingPeriod");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -89,10 +91,10 @@ namespace Subscriptions.Migrations
                     b.Property<DateTime>("CurrentPeriodEndDate")
                         .HasColumnType("date");
 
-                    b.Property<Guid?>("CustomerId")
+                    b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ProductId")
+                    b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Status")
@@ -171,11 +173,15 @@ namespace Subscriptions.Migrations
                 {
                     b.HasOne("Subscriptions.Domain.Customer", "Customer")
                         .WithMany("Subscriptions")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Subscriptions.Domain.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 

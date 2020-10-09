@@ -13,11 +13,13 @@ namespace Subscriptions.Data.Config
             builder.Property(x => x.Id)
                 .HasColumnName("ProductID")
                 .ValueGeneratedNever();
-            builder.Property(x => x.Name);
+            builder.Property(x => x.Name).IsRequired();
             builder.Property(p => p.Amount)
+                .IsRequired()
                 .HasColumnName("Amount")
                 .HasColumnType("money");
             builder.Property(x => x.BillingPeriod)
+                .IsRequired()
                 .HasColumnName("BillingPeriod")
                 .HasConversion(period => period.Name,
                     name => BillingPeriod.FromName(name, true));

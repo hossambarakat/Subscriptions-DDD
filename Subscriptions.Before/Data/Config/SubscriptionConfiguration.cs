@@ -15,15 +15,20 @@ namespace Subscriptions.Before.Data.Config
                 .HasColumnName("SubscriptionID")
                 .ValueGeneratedNever();
             builder.Property(x => x.Status)
-                .HasConversion(new EnumToStringConverter<SubscriptionStatus>());
+                .HasConversion(new EnumToStringConverter<SubscriptionStatus>())
+                .IsRequired();
             builder.Property(x=>x.Amount)
+                .IsRequired()
                 .HasColumnType("money");
             builder.Property(x => x.CurrentPeriodEndDate)
+                .IsRequired()
                 .HasColumnType("date");
             builder.HasOne(x => x.Product)
-                .WithMany();
+                .WithMany()
+                .IsRequired();
             builder.HasOne(x => x.Customer)
-                .WithMany(x=>x.Subscriptions);
+                .WithMany(x=>x.Subscriptions)
+                .IsRequired();
         }
     }
 }
