@@ -21,7 +21,7 @@ namespace Subscriptions.Before.Tests
                 .UseSqlServer("Server=localhost;Database=Subscriptions;uid=sa;pwd=yourStrong(!)Password;")
                 .Options;
             var context = new SubscriptionContext(options);
-            await context.Database.MigrateAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var customer = new Customer
             {
@@ -40,7 +40,7 @@ namespace Subscriptions.Before.Tests
             };
             await context.Products.AddAsync(product);
             await context.SaveChangesAsync();
-            
+
             var sut = new SubscribeRequestHandler(context, Substitute.For<IEmailSender>());
 
             var subscribeRequest = new SubscribeRequest

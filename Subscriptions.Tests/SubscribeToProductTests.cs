@@ -23,13 +23,13 @@ namespace Subscriptions.Tests
                 .UseSqlServer("Server=localhost;Database=Subscriptions;uid=sa;pwd=yourStrong(!)Password;")
                 .Options;
             var context = new SubscriptionContext(options);
-            await context.Database.MigrateAsync();
+            await context.Database.EnsureCreatedAsync();
             var product = new Product("Flowers", 10, BillingPeriod.Monthly);
             var customer = new Customer(new Email("customer@example.org"),new  CustomerName("Hossam", "Barakat"));
             await context.Products.AddAsync(product);
             await context.Customers.AddAsync(customer);
             await context.SaveChangesAsync();
-            
+
             var handler = new SubscribeRequestHandler(context, new SubscriptionAmountCalculator());
             await handler.Handle(new SubscribeRequest
             {

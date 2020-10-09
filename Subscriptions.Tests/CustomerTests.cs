@@ -14,8 +14,8 @@ namespace Subscriptions.Tests
         {
             var product = new Product("Flowers", 10, BillingPeriod.Monthly);
             var customer = new Customer(new Email("customer@example.org"),new  CustomerName("Hossam", "Barakat"));
-            customer.SubscribeTo(product, null);
-            
+            customer.SubscribeTo(product, new SubscriptionAmountCalculator());
+
             customer.Subscriptions.Count.ShouldBe(1);
 
             var subscription = customer.Subscriptions.Single();
@@ -28,7 +28,7 @@ namespace Subscriptions.Tests
             var product = new Product("Flowers", 10, BillingPeriod.Monthly);
             var customer = new Customer(new Email("customer@example.org"),new  CustomerName("Hossam", "Barakat"));
             customer.SubscribeTo(product, new SubscriptionAmountCalculator());
-            
+
             customer.Subscriptions.Count.ShouldBe(1);
 
             customer.DomainEvents.Count.ShouldBe(1);
