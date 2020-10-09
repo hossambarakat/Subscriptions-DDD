@@ -27,7 +27,7 @@ namespace Subscriptions.Commands
             var customer = await _subscriptionContext.Customers.FindAsync(request.CustomerId);
             var product = await _subscriptionContext.Products.FindAsync(request.ProductId);
             
-            customer.SubscribeTo(product, _subscriptionAmountCalculator);
+            customer.AddSubscription(product, _subscriptionAmountCalculator);
 
             await _subscriptionContext.SaveChangesAsync(cancellationToken);
 

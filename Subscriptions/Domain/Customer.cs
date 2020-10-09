@@ -10,7 +10,7 @@ namespace Subscriptions.Domain
     {
         private Customer()
         {
-            
+
         }
 
         public Customer(Email email, CustomerName customerName): this()
@@ -27,14 +27,14 @@ namespace Subscriptions.Domain
         private readonly List<Subscription> _subscriptions;
         public IReadOnlyCollection<Subscription> Subscriptions => _subscriptions.AsReadOnly();
 
-        public void SubscribeTo(Product product, ISubscriptionAmountCalculator subscriptionAmountCalculator)
+        public void AddSubscription(Product product, ISubscriptionAmountCalculator subscriptionAmountCalculator)
         {
             var subscriptionAmount = subscriptionAmountCalculator.Calculate(product, this);
 
             var subscription = new Subscription(this, product, subscriptionAmount);
             _subscriptions.Add(subscription);
             MoneySpent += subscription.Amount;
-            
+
             AddDomainEvent(new CustomerSubscribedToProduct
             {
                 CustomerId = Id,
