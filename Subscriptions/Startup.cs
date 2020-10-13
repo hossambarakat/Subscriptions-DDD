@@ -28,10 +28,10 @@ namespace Subscriptions
             services.AddMediatR(typeof(Startup));
             services.AddScoped<ISubscriptionAmountCalculator, SubscriptionAmountCalculator>();
             services.AddScoped<DomainEventDispatcher>();
-            services.AddDbContext<SubscriptionContext>((context, options) =>
+            services.AddDbContext<SubscriptionContext>((serviceProvider, options) =>
             {
                 options
-                    .AddInterceptors(context.GetService<DomainEventDispatcher>())
+                    .AddInterceptors(serviceProvider.GetService<DomainEventDispatcher>())
                     .UseSqlServer(Configuration.GetConnectionString("SubscriptionDatabase"));
             });
             services.AddScoped<IEmailSender, EmailSender>();

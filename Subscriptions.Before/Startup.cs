@@ -33,9 +33,9 @@ namespace Subscriptions.Before
             services.AddControllers();
             services.AddMediatR(typeof(Startup));
             //services.AddScoped<DomainEventDispatcher>();
-            services.AddDbContext<SubscriptionContext>( (context,options) =>
+            services.AddDbContext<SubscriptionContext>( (serviceProvider,options) =>
                 options
-                    //.AddInterceptors(context.GetService<DomainEventDispatcher>())
+                    //.AddInterceptors(serviceProvider.GetService<DomainEventDispatcher>())
                     .UseSqlServer(Configuration.GetConnectionString("SubscriptionDatabase")));
             services.AddScoped<IEmailSender, EmailSender>();
         }
