@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Subscriptions.Commands;
+using Subscriptions.Queries.GetActiveSubscriptions;
 
 namespace Subscriptions.Controllers
 {
@@ -19,9 +20,17 @@ namespace Subscriptions.Controllers
         [HttpPost]
         public async Task<IActionResult> Subscribe(SubscribeRequest request)
         {
-            await _mediator.Send(request); 
+            await _mediator.Send(request);
 
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetActiveSubscriptions(GetActiveSubscriptionsQuery request)
+        {
+            var response = await _mediator.Send(request);
+
+            return Ok(response);
         }
 
     }
