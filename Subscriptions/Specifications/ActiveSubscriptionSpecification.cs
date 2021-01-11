@@ -14,7 +14,7 @@ namespace Subscriptions.Specifications
 
     public static class ActiveSubscriptionSpecificationExtension
     {
-        public static IQueryable<Subscription> GetCustomerActiveSubscriptions(this IQueryable<Subscription> query)
+        public static IQueryable<Subscription> GetActiveSubscriptions(this IQueryable<Subscription> query)
         {
             return query.Where(new ActiveSubscriptionSpecification());
         }

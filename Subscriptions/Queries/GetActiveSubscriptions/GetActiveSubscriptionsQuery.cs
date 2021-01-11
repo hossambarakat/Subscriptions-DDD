@@ -33,7 +33,7 @@ namespace Subscriptions.Queries.GetActiveSubscriptions
         public async Task<List<GetActiveSubscriptionsResponse>> Handle(GetActiveSubscriptionsQuery request, CancellationToken cancellationToken)
         {
             var queryResult = await _context.Subscriptions
-                .GetCustomerActiveSubscriptions()
+                .GetActiveSubscriptions()
                 .ForCustomer(request.CustomerId)
                 .Select(x=> new GetActiveSubscriptionsResponse
                 {
